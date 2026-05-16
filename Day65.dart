@@ -7,23 +7,32 @@ class Node {
   Node(this.data);
 }
 
-void levelOrder(Node? root) {
-  if (root == null) return;
+List<List<int>> levelOrder(Node? root) {
+  List<List<int>> result = [];
+  if (root == null) return result;
 
   Queue<Node> q = Queue<Node>();
   q.add(root);
 
+  int level = 0;
   while (q.isNotEmpty) {
     int levelSize = q.length; // number of nodes at current level
+    List<int> currentLevel = [];
+
     for (int i = 0; i < levelSize; i++) {
       Node current = q.removeFirst();
-      print(current.data);
+      currentLevel.add(current.data);
 
       if (current.left != null) q.add(current.left!);
       if (current.right != null) q.add(current.right!);
     }
-    print("--- End of Level ---"); // separator for levels
+
+    result.add(currentLevel);
+    print("Level $level → ${currentLevel.join(', ')}");
+    level++;
   }
+
+  return result;
 }
 
 void main() {
@@ -33,6 +42,9 @@ void main() {
   root.left!.left = Node(3);
   root.left!.right = Node(7);
 
-  print("Level Order Traversal (with levels):");
-  levelOrder(root);
+  print("🌳 Level Order Traversal (with levels):");
+  var traversal = levelOrder(root);
+
+  print("\nTraversal as List of Lists:");
+  print(traversal);
 }
