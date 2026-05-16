@@ -14,11 +14,15 @@ void levelOrder(Node? root) {
   q.add(root);
 
   while (q.isNotEmpty) {
-    Node current = q.removeFirst();
-    print(current.data);
+    int levelSize = q.length; // number of nodes at current level
+    for (int i = 0; i < levelSize; i++) {
+      Node current = q.removeFirst();
+      print(current.data);
 
-    if (current.left != null) q.add(current.left!);
-    if (current.right != null) q.add(current.right!);
+      if (current.left != null) q.add(current.left!);
+      if (current.right != null) q.add(current.right!);
+    }
+    print("--- End of Level ---"); // separator for levels
   }
 }
 
@@ -29,6 +33,6 @@ void main() {
   root.left!.left = Node(3);
   root.left!.right = Node(7);
 
-  print("Level Order Traversal:");
+  print("Level Order Traversal (with levels):");
   levelOrder(root);
 }
